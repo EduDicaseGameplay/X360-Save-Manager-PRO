@@ -2,16 +2,6 @@
 
 
 
-!\[Platform](https://img.shields.io/badge/Platform-Windows-blue)
-
-!\[.NET](https://img.shields.io/badge/.NET-8.0-purple)
-
-!\[Status](https://img.shields.io/badge/Status-Active-success)
-
-!\[License](https://img.shields.io/badge/License-Free-green)
-
-
-
 > 🚀 Gerencie, importe, organize e corrija saves do Xbox 360 com facilidade.
 
 
