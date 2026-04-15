@@ -1,0 +1,1359 @@
+﻿exProfileEditor
+by
+v3n3
+
+TODO:
+
+-Rework the "Open GPD" context
+--Might require a basic recoding of Childs.frmMain
+--Requires some backend changes for Plugins ( because of the Missing TitleID )
+
+-Make everything ready for Horizon v3
+--Only have "basic" Information about how this is going to work
+--Testing is not possible
+
+-Finish all Plugins
+--BionicCommando = Research more
+--Borderlands2 = Add saving
+--CounterStrikeGO = Research
+--Halo3ODST = Fix
+--HaloReach = FUCKING FINISH
+---YOU STUPID FUCK, THE BASE IS READY FOR AGES AND YOURE TOO FUCKING LAZY TO ADD AN UI
+--Halo4 = Read above
+---YOURE THE STUPIDESTESTESTEST FUCK IVE EVER SEEN
+----Dumbfag
+--UnrealEngine3_Game = Add saving
+---YAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAY ITS 6AM
+--CastleCrasher = Rework UI
+--CoD7_9 = Fix UI, research BO2
+
+-Rework exGPD
+
+-Make the API Universal usable (without always referencing frmMDI)
+--Make usable using "Program" as accessor ?
+--Use Events ? Callbacks ?
+
+DONE:
+-Rework the Plugin System ( YAAAAAAAAAAAY cant wait for this -_- )
+---FUCK this shit, took 8 hours
+-Finish all Plugins
+--BionicCommando = saving added
+--CounterStrikeGO
+-Rework RecentFiles Registry
+-Rework Console
+--Add Queue
+--Use Events
+--Everything should talk to Program.Console
+
+
+
+
+KNOWN ISSUES:
+[Investigating] When Saving, theres a little chance an exception could be thrown
+-Only were able to reproduce it once, without a debugger attached
+[No fix] When closing exPE, there is a chance that an exception could be thrown
+-A Thread is running in background and going herp-derp
+
+
+
+Changelog
+
+[Childs/pnlGame] CHANGED: TitleImage is now 65;65
+[Childs/pnlProfile] REMOVED: btnOpenDashboard & btnChangeGamerpicture
+[frmMain] ADDED: More visible button to open the DashboardGPD
+[frmMain] ADDED: More visible button to change Gamerpicture
+[frmMain] CHANGED: "cleaner" handling of pnlGameAdder
+[Childs/pnlGameAdder] CHANGED: Small stuff
+[Statistics_Submit] ADDED
+[frmRss] CHANGED: read below
+[Update_Receive] CHANGED: Set WebClient Proxy to null
+-Because... its faster, for some reason
+[Helpers/Updater] REMOVED: Threading
+-No need, since Update_Receive is already threaded
+[pnlRss] CHANGED: Added Multithreading
+[frmSettings_Components/*] ADDED: Shitton of forms
+[frmSettings_Components/pnlPlaceholder] ADDED
+[frmSettings] ADDED: Some fucking function
+[Console] FIXED: Showing Output again
+[frmMain] CHANGED: Make sure the Games cant be moved anymore
+[Childs/pnlAchievements] CHANGED: Allow reordering of Achievements again
+[Helpers/ListViewEx] CHANGED: AllowRowReorder is not static anymore
+[Childs/pnlGameAdder] ADDED: Function to "Add Games"
+[Childs/pnlGamerpicture] ADDED: "Select Image"
+-Just a few times tested
+[frmMain] CHANGED: Saving - Only enable and un-busy, when not loading again
+[Childs/pnlGamerpicture] CHANGED: seperated Game and TitleImage download
+[Server] ADDED: Request_Games
+[Server] REMOVED: Request_Database
+[Server] ADDED: Request_Gamerpicture
+-Get a Gamerpicture from an TitleID and ImageID
+[Server] ADDED: Request_Gamerpictures
+-Gets all Gamerpicture ID´s for a Game
+[Server] ADDED: Request_GamerpictureGames
+-Get all Games which have Gamerpicture´s
+
+-2.2.9.2 Public Release Candidate released
+
+[frmMain] REMOVED: Gamerpicture submitting
+
+-2.2.8.2 Public Release Candidate released
+
+[Gamerprofile] CHANGED: Gamerpicture names
+[Server] ADDED: Submit_Gamerpicture
+[frmMain] CHANGED: No longer supports DragNDrop Reordering
+-Need to find a new way to implement this
+[frmMain] FIXED: Reordering Games when Search is used will fuck up the PlayedTitles
+[frmMain] CHANGED: Warning when reordering Games
+[frmMDI] CHANGED: More feedback when loading a Profile
+[frmMain] CHANGED: Some changes so you can see which game has a Plugin or AvatarAwards
+- "*" = Plugin
+- "AA" = Avatar Awards
+[pnlGame] ADDED: Some Images here and there
+[Childs/pnlAvatarAwards] ADDED
+-No unlocking for various reasons
+[*] ADDED
+[Plugins/UnrealEngine3] CHANGED: int8 Type ?!
+-There is no value ...
+--Or atleast SPACE for a value
+[Api/Server] FIXED: Check if Achievement has a picture
+[exProfileEditor_ModdingApi] CHANGED: Load() will take SupportedGame as argument now
+-Easier to identify which game wants to be loaded
+[Plugins/UnrealEngine3] CHANGED: GoW1/2 ME1/2/3 added
+[Plugins/UnrealEngine3] ADDED: SupportedGame class
+-With a "newFormat" bool
+[pnlGameAdder] ADDED
+[Api/Server] CHANGED: UserAgent for Requests
+
+-2.0.905.2 Public Release Candidate released
+
+[Universal] CHANGED: More Error handling
+[Api/Server] ADDED: Request_FindGames
+[Api/Server] ADDED: Submit_Statistics
+[Api/Classes] ADDED: Statistc / Statistic_Entry
+[Universal] ADDED: More statistics
+[Games_Submit] CHANGED: Will check if achievements are on srvGame and submit if null or incomplete
+[Games_Submit] CHANGED: More Error handling
+[Api/Server] CHANGED: Added more Exception handling to Request_Game
+[Api/Classes/Achievement] CHANGED: JsonProperty Names & Requirements
+[Api/Classes/GameDetails] CHANGED: JsonProperty Names & Requirements
+[Plugins/MassEffect3] ADDED
+[Plugins/AlanWake] ADDED
+[frmMDI] ADDED: onCompleteCallback blaw
+[Update_Receive] ADDED: onCompleteCallback
+[Console] CHANGED: when LogType is "Warning" the Console will Beep
+[Helpers/WindowHandler] ADDED
+-Will handle all Child-Forms for the MDI
+[pnlLog] REMOVED: Everything will be sent to System.Console
+-Found out that the Log caused some drastic delays and overall performance was just bad
+[Statics/Updater] REMOVED: All unused Update-Strings
+[Helpers/Updater] CHANGED: Moved all statics to Statics.cs
+[Helpers/ArgumentHandler] ADDED: "-console" Argument
+[Overall] Console Output added
+[Plugins/*] FIXED: IPlugin Classes wont have Obfuscation
+[Helpers/Console] ADDED
+[Helpers/DynamicInitializer] ADDED: Faster then "Activater.CreateInstance"
+[Game_Submit] CHANGED: Will also send Game when MaxGS doesnt match
+[Game_Submit] CHANGED: No AchievementImage Submiting anymore
+[Api/Classes/GameDetails] CHANGED: More null-handling
+[Api/Classes/GameDetails] ADDED: return null when null instead of trying to parse
+[Api/Classes/Achievement] ADDED: return null when null instead of trying to parse
+[Helpers/UriBuilder] ADDED
+[Everywhere] CHANGED: Implement API changes
+-Only fix compiler errors, more optimization later
+[frmAction_CheckImages] CHANGED: Worker will wait as long as it takes for the Games to Download
+[Api/Server] CHANGED: Request_Game "noImages" parameter changed to "includeImages"
+-Someone stab me with my stupidneseseseses
+[Api/Server] CHANGED: Request_Game to JSON
+[Api/Classes] ADDED
+[frmMain] CHANGED: Simplified the UnlockAll Code
+[DevExpress] CHANGED: Update from 10.2 to 12.2
+[XDBF_ImageEntry] FIXED: Will return null when the Image cant be parsed
+[frmMdi] CHANGED: btnVisitSite will now show Statics.srv_Uri as Text
+[frmRss] ADDED: Will show pnlLoading while loading
+[Program] CHANGED: Renamed all statics
+[Plugins/BionicCommando] CHANGED: Can save now
+[exProfileEditor_ModdingApi] ADDED: "Game"
+-Will be the currently required Game from the "IPlugin.SupportedGames" List
+[exProfileEditor_ModdingApi] REMOVED: "TitleID" and "TitleID_Hex"
+[frmRss] ADDED: Error handling
+[frmRss] ADDED: Will read the RSS Feed from v3n3.org
+[exProfileEditor_ModdingApi/IXDBF] CHANGED: "xIO_TitleSpecific*" to "TitleSpecific*"
+-Replace "*" with 1, 2 or 3
+[Plugins/BionidCommando] ADDED: Missions
+[pnlGameEdit] ADDED: "Developer" label
+[exProfileEditor_ModdingApi] ADDED: Can SetSync() for each TitleSpecific Entry
+[Plugins/RedFactionGuerilla] ADDED: Reading/Saving
+[Plugins/RedFactionArmageddon] ADDED: Reading/Saving
+[Plugins/NPlus] ADDED: Raw Reading
+[pnlGame] FIXED: In some cases CheckGameEdit() would throw an Exception
+[frmMain] CHANGED: "*" added for titles with GameEdit
+-Can be used in the Search-bar
+[frmAction_UnlockAllOffline] ADDED
+[Helpers/Engines/UnrealEngine3] ADDED: Writing
+-Currently experimental
+
+-2.0.682.1 Public Release Candidate released
+
+[Plugins/UnrealEngine3_Game] CHANGED: Version to 1.0.0.2
+[Plugins/Doom3BFG] CHANGED: Version to 0.0.0.2
+[Plugins/BionicCommando] CHANGED: Version to 0.0.0.2
+[pnlExGpd_Read] FIXED: Not applying UnlockTime correctly
+[Plugins/CoD6_8] CHANGED: Version to 0.0.0.2
+[Plugins/CoD6_8] ADDED: CoD_Mission, CoD_Difficulty
+-Will be useful later
+[Plugins/CoD6_8] ADDED: RAW Table
+-No editing yet
+[pnlRecentFiles] FIXED: Would disapear on exception
+[Game_Submit] CHANGED: Another check if an Image is null
+[XDBF_ImageEntry] CHANGED: the way Images are loaded and stored
+-Memory usage decreased by 70% :-)
+[exProfileEditor_ModdingApi/XDBF] ADDED: TitleID, TitleID_Hex
+[pnlGame] ADDED: Image for "Achievements"
+[Plugins/*] ADDED: TitleImage
+[exProfileEditor_ModdingApi/SupportedGame] ADDED: TitleImage
+-Will be Shown in the Header
+[Plugins/Borderlands2] ADDED: BadassToken, BadassRank and GoldenKeys
+-Dunno what else to add
+[pnlRecentFiles] FIXED: Would keep unused files in Registry
+[Plugins/UnrealEngine3_Game] ADDED: 10 Games
+- GoW 1/2/3/J, Borderlands 1/2, BioShock Infinite, Shadow Complex, Bulletstorm, Homefront
+[exProfileEditor_ModdingApi/IMainForm] CHANGED: LoadGame() to LoadGame(Classes.XDBF)
+-Because I want the game to be loaded when I ( that should be double capital ) want
+-FFS need to check every Plugin AGAIN ( Im raging )
+[exProfileEditor_ModdingApi/IPlugin] REMOVED: The XDBF for Load()
+[Plugins/*] Size Changed
+[Plugins/*] CHANGED: using IMainForm Interface now
+-More control over the Plugin for exProfileEditor
+[pnlGameEdit] ADDED
+-For a standard Save/Load Form
+-Also showing Plugin Version
+[exProfileEditor_ModdingApi/IMainForm] ADDED
+-To handle Loading/Saving on frmGame
+[exProfileEditor_ModdingApi/IPlugin] ADDED: Documentation for "Version"
+[CoD7] CHANGED: Now "CoD7_9"
+-Support added for "Call of Duty: Black Ops 2"
+[Games_Submit] FIXED: Some error handling in case of GDI+ Errors
+
+-2.0.315.1 Public Beta released
+
+[Plugins/Borderlands2] CHANGED: Does now show RAW Entries
+[Plugins/CoD6_8/CoD6_8_Setting] CHANGED: The way Binary Data is handled
+[frmMain] FIXED: Would throw an Exception when hittin "Save"
+
+-2.0.312.1 Public Beta released
+
+[frmMain] CHANGED: "Save..." to "Save"
+[frmMain] REMOVED: Unneded "Save..." Menu Items
+[frmAction_CheckImages] ADDED: Error handling
+[frmAction_CheckImages] CHANGED: Will now wait (amountOfGames)*1500 milliseconds till abortion
+[Games_Recive] ADDED: Added Error handling
+[Games_Submit] CHANGED: Will show the Exception and submit using [Exception_Submit]
+[Plugins/BionicCommando] ADDED
+-thanks to godzcheater for the initial informations
+[Plugins/Helpers/Engines/UE3] ADDED
+[Plugins/Borderlands2] ADDED
+[frmGame] FIXED: Would always show the GameEdit Tab, when loaded before
+-Only because I changed stuff in the previous version
+[frmAbout] CHANGED: updated the "Thanks" list ;-)
+[Plugins/HaloReach] ADDED: Everything Singleplayer related
+-NO RELEASE
+[Plugins/Halo4] ADDED: Multiplayer related stuff
+-Never going to be released
+[Plugins/Doom3BFG] ADDED: Reading the Settings
+-NO RELEASE
+[Plugins/BionicCommando] ADDED: Reading the Settings
+-NO RELEASE
+[Plugins/CoD6_8] ADDED: Reading the Settings
+-NO RELEASE
+[Helpers/PluginHost] CHANGED: Support internal Plugins again
+[Plugins/*all*] CHANGED: Moved them INSIDE the Application
+[Plugins/Halo4] ADDED: UI Elements
+[frmAction_CheckImages] ADDED: A progress while Checking all Images
+[frmMain] REMOVED: RightClick "CheckImages"
+[frmMain] ADDED: "Actions" DropDown Menu
+
+-2.0.142.1 Public Beta released
+
+[frmMain] CHANGED: "CheckGameAdder" will constantly remove the Tab
+-Till I have everything ready
+[API/Server] ADDED: Request_GameImage
+-Need to change some things here and there
+[API/Server] CHANGED: "Request_GetDatabase" to "Reqest_Database"
+[API/Server] CHANGED: "Request_GetMissingGame" to "Request_Game"
+[pnlExGpd_Read] CHANGED: Will now Save the Profile after adding Games
+-Have to find another way around that ...
+[XDBF] CHANGED: Wont call "Save" anymore when adding Title/Image/Anything
+[pnlExGpd_Read] CHANGED: Will clear RAM after every Game instead of Achievement
+-Speed improvements, yay
+[pnlExGpd_Read] REMOVED: Unecessary shit
+
+-2.0.131.1 Public Beta released
+
+[Exception_Submit] CHANGED: Will close after 10 seconds when frmException is closed
+[frmException] ADDED: Now ALWAYS has Focus
+[API/Server] CHANGED: Submit_MissingGame - Check for the right Image Size
+[API/Server] CHANGED: Submit_MissingImages - Check for the right Image Size
+[API/Server] ADDED: Function to parse the Server response
+[API/Server] CHANGED: Normal Submits/Requests return the response
+[Exception_Submit] ADDED
+[Universal] CHANGED: Recovered the "ChangedFiles" functionality
+-nasty change
+[API/Server] FIXED: Would throw under certain circumstances an exception
+[pnlProfile] ADDED: Will Download Avatar Image when missing
+
+-2.0.119.1 Public Beta released
+
+[frmMain] FIXED: Will now assign a ImageKey, even when no Image is present
+[Games_Receive] ADDED: Waiting for updater to finish
+[Receive_Games] CHANGED: now "Games_Receive"
+[Submit_Games] CHANGED: now "Games_Submit"
+[Receive_Update] CHANGED: now "Update_Receive"
+-Fuck, the Client cant do anything else then receiving
+[pnlServerProgress] FIXED: The routine for blabla was wrong
+-Ended up in tearing when a control was removed
+[frmMain] CHANGED: Background & Foreground Color
+[pnlAchievements] CHANGED: Background & Foreground Color
+-Need to Change the Column Colors
+[*Everything related to the Base*] CHANGED: Will only write to the files when Save() is called
+[frmMain] FIXED: Will only submit all Games once
+[XDBF_TitleInfo] CHANGED: saving TitleImage is simpler now
+[pnlAchievements] ADDED: A temporary button for checking the Images
+-Something fucks it up while loading the form
+[Submit_Games] ADDED: More feedback about the progress
+[Submit_Games] ADDED: Images for "Done" and "Error"
+[frmChildHost] ADDED: Now being able to save GPD-Only files
+[pnlAchievements] CHANGED: Will now handle the new Server architecture
+-Silly me ...
+[Plugin/CoD2_4_5] FIXED: Added missing Form
+-Thanks everyone for letting me know...just joking, fuck you all
+[Updater] REMOVED: Everything related to "Beta" stuff
+
+-2.0.88.1 Public Beta released
+
+[pnlRecentFiles] ADDED: A little GroupBox just for the Cosmetics
+[Fingerprint] CHANGED: The reason the Server interaction was so slow, changed that
+[frmMDI] CHANGED: Wont draw while initializing
+[frmMDI] CHANGED: All Child-Forms now initialized at once
+[Receive_Update] ADDED: Plugin SHA1 check
+[Receive_Update] CHANGED: removed everything related to exGA
+[Receive_Update] ADDED: Seperate Progress Form for Updating
+[pnlApiSubmit_Games] CHANGED: renamed to "Submit_Games"
+[pnlApiSubmit] CHANGED: renamed to "pnlServerProgress"
+[Server] REMOVED: Caching Games
+-Would just spam the RAM right now
+[Server] REMOVED: Submit_MissingGame wont submit the Achievement Images anymore
+[pnlApiSubmit_Games] CHANGED: Performing faster and less Memory consuming
+[pnlApiSubmit_Games] CHANGED: Memory Management and stuff
+[frmMDI] REMOVED: bgwSubmitMissing
+-Integrated into [pnlApiSubmitGames]
+[pnlApiSubmit_Games] CHANGED: Seperated Labels
+-Stupid me
+[pnlGame] FIXED: Remove GameEdit Tab when Exception occurs
+[pnlApiSubmit_Games] CHANGED: Cancel after waiting 10*500 milliseconds for Updater
+[Universal] CHANGED: Additional Checks for Offline-Mode
+[pnlEntries] ADDED: Some Error handling for unknown Type´s
+-Which should ACTUALLY never happen
+[Server] ADDED: Caching for Games ( Request / Report )
+-Including several checks for updating Games which are allready in the list
+[frmMDI] CHANGED: Open the Exceptions in the MDI now
+[Server] FIXED: Parsing the Images correctly now
+[frmMain] FIXED: Would throw an Exception if no Games are added
+[pnlRecentFiles_File] CHANGED: Moved to frmMDI_Components
+[pnlRecentFiles] CHANGED: Moved to frmMDI_Components
+[pnlLog] CHANGED: Moved to frmMDI_Components
+-About 65416546156 Compile Errors fixed
+[pnlApiSubmit_Games] CHANGED: Moved to frmMDI_Components
+[pnlApiSubmit] CHANGED: Moved to frmMDI_Components
+[frmFeeds] CHANGED: Moved to frmMDI_Components
+[pnlRecentFiles] CHANGED: Nothing static anymore :-)
+-Needs more work for Settings
+[pnlRecentFiles_File] ADDED
+[pnlApiSubmit] ADDED: Will show Progress in frmMDI
+[frmApiSubmitGames] ADDED: Ask User if they want to submit Games
+[frmMDI] CHANGED: Additional check for submiting Games to the Server
+[Updater] FIXED: Adding "Offline" Statuses correctly when offline
+[frmMDI] FIXED: Not showing the correct Server Status
+[Everywhere] ADDED: Statistics
+[Helpers/regEdit] ADDED: Numerous Settings
+[Plugins/Halo4] ADDED
+[Plugins/HaloReach] ADDED
+[XDBF] FIXED: FileSize will be set again
+-FileSize wont tripple in Size anymore ;-)
+[XDBF] FIXED: SpaceTable will be freed again
+
+-2.0.13.1 Public Beta released
+
+[frmMain-SubmitMissing] CHANGED: Report now how many games got reported
+[Server] CHANGED: Report amount of submited Games
+[Updater] ADDED: Cache for [Server].Request_MissingGames
+[frmMain-SubmitMissing] REMOVED: Writing allready submited into a Temporary file
+[Server] ADDED: Request_MissingGames
+[frmMDI] FIXED: exGA Check saying "Invalid" when file not found
+[frmMain-SaveProfile] FIXED: Will now Cancel bgwSubmitMissing if busy
+[frmMain-SubmitMissing] CHANGED: Report Games WHILE checking
+
+-2.0.03.1 Public Beta released
+
+*Add shitload of changes here*
+
+[frmFatX] REMOVED: No sense without STFS
+[STFS] REMOVED: Doesnt work anyway
+[Program] ADDED: "exGPD_Version_LastCompatible"
+[FileFormats/exGPD] ADDED: "LastPlayed" Attribute
+
+!!! exGPD Version increased to 0.6.6.0 !!!
+-Older versions ARE compatible
+
+[frmSplash] ADDED
+-Moved Updater Code there
+
+-1.9.09.2 Public Beta Released
+
+[MORE STUFF] Stuff: Stuff
+[pnlExGpd_Read] FIXED: "Insert Settings" now actually does something
+[pnlExGpd_Read] CHANGED: Multithreaded
+[EVERYWHERE] Stuff: Stuff
+[Program] ADDED: Check if Executable-Name is right
+-For Updating reasons ...
+[frmFeeds] ADDED: Right-Click Menu for Tweets
+-For refreshing & open tweets
+
+-1.9.01.4 Private Stable Release
+
+[Everywhere] A LOT of stuff everywhere
+-Mostly regarding Plugins
+[Helpers/PluginHost] ADDED
+[exProfileEditor_ModdingApi] ADDED
+[X360DLL] ADDED
+
+-1.8.70.1 Public Beta Release
+
+[CLKsFATXLib] CHANGED: New Version (iDunno about the Version number, he didnt change it)
+[Universal] FIXED: Can now be completely used offline
+[FileFormats/exGPD] FIXED: "Anonimize" wouldve been skipped
+-WTF I didnt code that ...
+[frmMain] CHANGED: The way to handle FATX Profiles
+[frmMain] ADDED: Baby-Security for "Unlock All"
+
+-1.8.65.1 Public Beta release
+
+[Universal] ADDED: Memory will be cleared every few mins
+[pnlAchievements] ADDED: Will check when Loading the Achievements if all Images are present
+-DROPPED DUE TO WEIRD BUG - Prompt will show up and ask if user wants to download all pictures
+-There will be a setting to change that ... later
+[frmFatX] CHANGED: Will now load all Profiles from all Devices on startup
+-There will be a setting to change that ... later
+[frmMDI] CHANGED: Only 1 frmFatX can be opened
+[frmMDI] FIXED: Would report that a file is in use, if it doesnt exist anymore
+[pnlRecentFiles] CHANGED: Will now delete Entrys of "Not found" Profiles
+[GamerProfile] FIXED: Will always check if DashGPD is opened
+[pnlProfile] CHANGED: Crown-Event isnt buffered anymore
+[pnlGame] FIXED: "LoadGPD" function
+[frmFatX] ADDED: Double-Clicking an Profile will open it
+[gePlantsVsZombies] ADDED
+[GameEdit/PlantsVsZombies] ADDED
+[Updater] ADDED: "updpath"
+
+-1.8.50.1 Public Beta release
+
+[PEC] FIXED: Will now Delete Mount-Folder
+-Would insert the Folder into the STFS-Package :-x
+[pnlGame] REMOVED: Everything related to AvatarAwards
+-Need to recode that part
+[CLKsFATXLib] ADDED
+-Replaced the old DLL
+[geRedFactionGuerilla] ADDED
+[GameEdit/RedFactionGuerilla] ADDED
+[geDoritosCrashCourse] ADDED
+
+-1.8.42.1 Public Beta release
+
+[GamerProfile] CHANGED: Better Caching
+[pnlExGpd_Read] CHANGED: Faster now
+[pnlExGpd_Read] FIXED: Would end up in an Infinite Loop
+[pnlGame] CHANGED: From ServerSide-encrypted exAchImg to File-encrypted
+[GameEdit/DoritosCrashCourse] ADDED
+[GameEdit/Halo3] FIXED: Values set wrong
+-No panic, nothing corrupted or anythiny like that
+[geHalo3] CHANGED: Small GUI changes
+[frmMDI] CHANGED: "Begin / EndUpdate" Function
+[frmXblHack] CHANGED: Will now create a GPD
+[frmMDI] ADDED: ASCII-Art
+[frmXblHack] CHANGED: Will check if TitleName & ID is not Empty
+[frmXblHack] CHANGED: Max / Min-Size for TitleName & ID
+[frmMain] CHANGED: "Xbl Hack" will now check if the Game allready exists
+[frmMain] FIXED: Will now check the Game-Type while "Unlock All"
+[frmMDI] CHANGED: Some GUI related stuff
+
+-1.8.22.1 Public Beta release
+
+[GameEdit/CoD6] ADDED
+[X360DLL/STFS] CHANGED: KV.bin can now be your own
+-Just place your KV in the root directory of the App and name it "kv.bin"
+[Helpers/regEdit] CHANGED: Registry-Path
+[Helpers/regEdit] CHANGED: Some more Stats
+[frmFatX] ADDED: Right-Click Menu
+-Extract
+[X360DLL/STFS] FIXED
+[pnlEntries] CHANGED: Will always sort the Tree
+[pnlEntries] REMOVED: XDBF-Entries
+[pnlGame] CHANGED: Will load pnlEntries for AvatarAwards
+[frmMDI] FIXED: Will now force to download new Version
+[X360DLL/PEC] CHANGED
+[pnlAchievements] FIXED: Would even Download Images when Locked
+[frmMain] CHANGED: Will report every game while "Unlock All"
+[frmMdi] ADDED: Server-Side control for exGA & exAchImg
+[Helpers/Updater] ADDED: Own class for Updater stuff
+[FileFormats/*all*] CHANGED: More Dynamic
+[FileFormats/exAchImg] ADDED
+[pnlGamerpic] ADDED
+
+-1.8.2.1 Public Beta release
+
+[pnlGame] ADDED: Logging for AchImg Downloader
+[X360DLL/STFS] CHANGED: MetaData related
+[pnlAchievements] CHANGED: Will lock everything down while downloading
+[pnlAchievements] ADDED: AchImg Download Security
+-So people cant use our Server for the Images ;-)
+[Universal] CHANGED: Beta-Stuff
+[pnlProfile] CHANGED: Error-Handling on Image load
+[GamerProfile] FIXED: Would go "blaw" on XBL-Hacked Games
+[pnlGame] CHANGED: Read below
+[frmMain] CHANGED: Can now load "XBL Hacked" Games
+-Those Games which dont have a GPD
+[GamerProfile] ADDED: PEC Error Handling
+
+-1.7.65.4 Private Beta
+
+[pnlAchievements] CHANGED: Error-Handling on AchImg Download
+[pnlAchievements] CHANGED: Locking Achievement will remove AchImg
+[pnlAchievements] ADDED: Thread to Download Achievement Images
+[X360DLL/GamerProfile] FIXED: Memory Leak would cause DashGPD to be null
+[X360DLL/GamerProfile] FIXED: Wont close PEC anymore if its null
+-Would keep you from closing / saving when PEC-File wouldnt be available
+[frmMain] FIXED: "Unlock All" will now set Sync
+-Stupid me >.<
+[PEC] CHANGED
+
+-1.7.57.1 Public Beta Release
+
+[pnlAchievement] CHANGED: Updating Game is faster now
+-Would take AGES (20sec) on a big Profile
+[XDBF] CHANGED: Wont "save" when unlocking anymore
+-Required for faster "Unlock All"
+[frmMain] ADDED: Thread for "Unlock All"
+[X360DLL/PEC] CHANGED
+[frmMain] FIXED: CheckGameAdder would cause exception if LoadPackage would be too slow
+[pnlExGa] CHANGED: Faster loading
+[pnlAchievement] CHANGED: Check if AchImg is null (for Right-Click AchImg)
+[Universal] FIXED: Bugs caused by Base-changes
+[pnlEntries] CHANGED: RightClick ContextMenu
+-Only meant for testing, now fixed for stupid people :-)
+[frmMDI] CHANGED: Some optimizations
+-Just a little "freeze" at start now, no pop-up anymore (Interop ftw!)
+[frmMDI] CHANGED: Wont check for Internet Connection anymore
+-The forms do that on their own (In threads, ofcourse)
+[pnlEntries] CHANGED: Panels are Pre-Loaded
+[XDBF_AchievementEntry] CHANGED
+[XDBF_AvatarAwardEntry] ADDED
+[geHalo3] REMOVED: Header & Footer of all ComboBox
+[pnlGame] REMOVED: Ability to edit Title-Name
+[frmAchievement] ADDED: Form to Edit an Achievement
+[frmSyncList] CHANGED: Not Sizable anymore
+[STFS] CHANGED: Less Memory heavy
+[STFS] CHANGED: Faster loading times
+[GamerProfile] FIXED: Memory leak
+[GamerProfile] CHANGED: Loading Games is more efficient
+-Caching the Games, so we dont have to access the DashGPD all the time
+[frmMain] FIXED: Wrong btnSave Enabled / Disabled
+[frmMDI] FIXED: Will now create the exGA Directory after deleting (when new version is available)
+[pnlExGa] ADDED: Thread for adding Games
+[pnlExGa] CHANGED: Game-loading speed increased
+[FileFormats/exGA] FIXED: Wouldnt clear the List
+[pnlExGpd_Create] FIXED: Might be in a infinite loop when searching
+[XDBF] FIXED: ImageEntry might be fucked up for some reason
+-Only appeared after recovering, for me atleast
+
+-1.7.26.0 Public Stable Release
+
+[frmMain] FIXED: Closing Package Function didnt null everything
+-Fixing something broke everything else
+[geCastleCrashers] FIXED: Would save the Gold-value but not read
+-Means it would always be "0" >.<
+[GameEdit/CastleCrashers] FIXED: Wrong Gold-Location :-x
+
+-1.7.23.0 Public Stable Release
+
+[pnlOrderGames] ADDED: Form to Mass-Reorder Games
+-You can also change the LastPlayed-Time ;-)
+[frmMain] ADDED: Function to disable all Controls
+-Instead of using "this.Enabled"
+[pnlExGa] FIXED: Image would always be null
+-Its AMA´s fault
+[STFS] FIXED: Checking if something is valid thats null
+- ... smart ...
+[frmMain] CHANGED: Form cant be closed while Loading / Saving
+-Just Temporary till some things are recoded
+[FileFormats/AMA] FIXED: "Unlocked" & "Locked Description" were switched
+-Not my fault, thats what I call a "Design flaw" ;-)
+[pnlExGpd_Read] REMOVED: Unused code
+
+-1.7.13.0 Public Stable Release
+
+[XDBF] FIXED: Ghetto-Fix
+[Universal] REMOVED: A lot of unused Classes
+
+-1.7.11.0 Public Stable Release
+
+[FileFormats/AMA] FIXED: Error-Handling missing
+-WoopWoop
+[frmSyncList] ADDED
+-ReadOnly for now
+[eiSyncList] ADDED
+[pnlGame] ADDED: "Never" LastPlayed checkbox
+-Is ReadOnly
+[pnlGame] CHANGED: SetSync when changing "LastPlayed"
+[frmMain] CHANGED: Save-Buttons recoded
+[frmMain] FIXED: Saving is now Thread-safe
+[pnlGame] CHANGED: "LastPlayed" can now be modified
+[frmMain] ADDED: Games DragNDrop Reordering
+-Still requires 360-testing, but should be fine
+[Helpders/ListViewEx] CHANGED: Triangle now drawn on Upper-Left Corner of the Item instead of just 0
+[frmMain] FIXED: Loading Code would still write to log when not allowed
+[frmMain] FIXED: ProfileID wasnt assigned when saving to FATX
+-Woopsie
+[Helpers/ListViewEx] ADDED: Red Line on DragNDrop
+-Line will appear where the Item will be dragged to
+[pnlEntries] CHANGED: Width will be set for every column
+[pnlEntries] ADDED: "SyncList", "SyncData" and "XDBF-Entry"
+-Not (yet) editable
+[pnlRecentFiles] ADDED: MultiThreading
+-Yap, its everywhere
+[frmMain] ADDED: A little nice LoadingCircle Animation
+-iDunno why, just looks nice
+[frmMain] CHANGED: Dont mess with "Enabled" ...
+-FUUUUUUUUUUUUUUUUUUU WHATS WRONG WITH YOU ? YOU ALLREADY REMOVED IT 3 TIMES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1111
+-Fucktard
+[XDBF] ADDED: Moar Error-Handling
+[Universal] FIXED: Some Error-Handling fixes
+
+-1.6.49.0 Public Stable Release
+
+[Universal] ADDED: More Error-Handling
+[frmException] ADDED: For better User-Feedback
+-Pfffff, if someone would ever report anything :-P
+[frmMain] CHANGED: Some Logging-Stuff
+-For pewtiful colors
+[frmMain] ADDED: Saving-Thread
+-Really tricky (thanks to FATX)
+-Why didnt I add that before ?!
+[pnlLoading] ADDED
+[Helpers/LoadingCircle] ADDED: Schmexxy Control
+[geHalo3] FIXED: Save-Button is now enabled
+-Meant to be a few versions before... disabled by code >.<
+[frmFatX] ADDED: Extract Error-Handling
+
+-1.6.39.1 Public Beta Release
+
+[frmFatX] FIXED: "Could not find a part of path" Exception
+[frmFatX] REMOVED: Old, ugly code
+[GamerProfile] FIXED: Most Mounting Errors fixed
+[ClkFatx] CHANGED: Updated to latest Source
+-With some Modifications applied
+[frmAma_Convert] ADDED
+[frmExGpd_Edit] FIXED: AppendLog string changed to "exGPD-Edit"
+[FileFormats/AMA] ADDED: For converting
+-No Encryption ... I designed that :-3
+[frmAbout] ADDED: "Loaded Assemblys" List
+-Required for testing
+[frmMDI] CHANGED: Loading Code
+[geHalo3] ADDED: "Max Skulls" Button
+[Universal] CHANGED: DevExpress updated to 10.2.6
+[frmMDI] ADDED: Startup Argument "-ImAnon"
+-Will hide Gamertag + ProfileID
+-Mainly for people who want to take pics without their Info (like mü)
+
+-1.6.26.1 Public Beta Release
+
+[frmMain] FIXED: MountPath is now a little Randomized
+-Should fix Directory-Delete Errors
+[Program] REMOVED: ScreenSize check
+[pnlExGpd_Read] FIXED: Would raise an event everytime a file is loaded
+-Does show up as freeze
+[pnlExGpd_Read] CHANGED: "Open" MultiSelect enabled
+
+-1.6.22.1 Public Beta Release
+
+[frmMDI] CHANGED: Will now start Maximized
+[Program] ADDED: Startup Argument "-IgnoreSize"
+-Will remove the ScreenSize check
+[frmMDI] CHANGED: Minimum Size set to 1018;734
+[Program] CHANGED: Minimum Screensize is now "1018x734"
+
+-1.6.18.1 Public Beta Release
+
+[geHalo3] CHANGED: Reload Missions on "Max Missions"
+[ribgrpOther] REMOVED: Wont be enabled anytime soon
+-Thanks to obfuscation / encryption!
+[pnlRecentFiles] ADDED: You can now remove a file from the list
+[pnlRecentFiles] ADDED: Will show the last 5 opened files
+-Excluding FATX Profile´s
+[Program] ADDED: Check if ScreenSize is atleast "1299x922"
+-YapYap
+[frmMDI] CHANGED: MinimumSize set to "1299x922"
+[Universal] ADDED: Several Right-Checks
+[Universal] CHANGED: Doesnt require Admin-privileges anymore
+-So you can Drag&Drop, but not use FATX
+[pnlAchievements] CHANGED: Time-thing disabled when "Offline" or "Locked" is selected
+-Changed that before. Now its propper
+[pnlAchievements] CHANGED: Wont redraw while loading Achievements
+-Why didnt I add that before...
+[frmFatX_SelectDevice] ADDED: "Status" lable
+[frmFatX_SelectDevice] CHANGED: Now using own Thread to get Drives
+[frmMDI] FIXED: Link to Temp-Site fixed
+
+-1.6.2.1 Public Beta Release
+
+[pnlExGpd_Create] FIXED: Woudlnt add Pictures in rare circumstances
+-With "rare" I mean "always"
+[XDBF_AchievementEntry] FIXED: Locked & Unlocked Description switched
+[XDBF_AchievementEntry] FIXED: Locking Online Achievements wouldnt work
+[XDBF_SyncList] CHANGED: Will now Sort the Locked Achievements
+[pnlExGpd_Create] ADDED: "Add Pictures" Option
+-Will add the Achievement-Pictures
+[frmMain] CHANGED: exGA Version string will be set again
+[frmMDI] FIXED: "opFile" Argument stopped working
+-Forgot to update
+[pnlExGpd_Read] FIXED: Duplicated Items
+-Only after re-opening
+[pnlExGpd_Read] CHANGED: General recode
+-Easier to maintain now
+[GameEdit/Halo3] CHANGED: General recode
+-Should fix a few problems
+[geHalo3] FIXED: RallyPoints wouldnt save
+[Universal] CHANGED: Most used DLL´s now internal
+-Shouldnt require that much RAM anymore
+[pnlGame] FIXED: CoD2 GameEdit enabled again
+-WTF why did I comment this out ?!
+
+-1.5.53.0 Stable Public Release
+
+[XDBF] FIXED: "UpdateTotals" would be in an infinite loop
+-Stupid me
+
+-1.5.52.0 Stable Public Release
+
+[frmMain] CHANGED: pnlExGa loading code
+-Better performance
+-Control wont freeze anymore when selecting "exGA"
+[frmMDI] CHANGED: Updater code
+[FileFormats/exGA] ADDED: Event when the File is loaded
+[pnlExGa] CHANGED: Simple recode
+[frmMDI] CHANGED: Initial Size will be bigger now
+[pnlExGa] CHANGED: Made more Idiot-proof
+[GameEdit/Halo3] FIXED: Saving will now set Sync.
+[geHalo3] FIXED: Now also saving the Second Page
+[frmFatX] FIXED: When closing Form all Profiles will be closed
+[frmFatX] CHANGED: After loading the profile the STFS package will be closed
+-We dont need it anymore anyway, since we dont want to save the hole thing
+[frmFatX] CHANGED: More checks for if "Load Profile" is checked
+[frmMain] CHANGED: Recoded "ClosePackage" function
+-Sometimes the form wouldnt close when a Exception occured
+[GameEdit/CastleCrashers] FIXED: Saving will now set Sync.
+
+-1.5.34.0 Stable Public Release
+
+[pnlGame] CHANGED: "CheckAvatarAwards" only fired when Dev / Beta
+[geCastleCrashers] ADDED
+[frmFeeds] CHANGED: Form-Text
+-Since the name shows up on the MDI-Parent
+[pnlAchievements] FIXED: ListView would go under the InfoGroup
+-That what happens if you mess with new Controls
+[pnlExGa] CHANGED You can now also search for a TitleID
+[frmMain] CHANGED: You can now search for a TitleID
+-Just type in the ID into the Search-Field
+
+-1.5.25.0 Stable Public Release
+
+[Universal] ADDED: A lot of Memory ClearUp
+-Requires Heavy testing to avoid Memory Leaks
+[pnlExGa] CHANGED: Check if exGPD Version is OK
+[frmMDI] CHANGED: Will force to close everything when Update is available
+
+-1.5.22.4 Private Beta Release
+
+[pnlProfile] CHANGED: Some normal Controls to DevExpress stuff
+[pnlProfile] CHANGED: REP loading Code
+-Shouldnt throw Exception anymore
+[pnlProfile] FIXED: Would throw Exception if Exception would occour
+-Kekeke
+
+-1.5.19.4 Private Beta Release
+
+[GamerProfile] ADDED: Function to modify TitlesPlayed List
+-Actually allready in code, just added Error-Handling and cookies
+[GamerProfile] CHANGED: Updating-Code changed
+[pnlProfile] ADDED: Even more Error-Handling
+[Universal] CHANGED: General Loading-code Recode
+-So you dont need to reload the file anymore after Adding a Game (exGA / exGPD)
+[FileFormats/exGA] ADDED: A lot Error-Handling
+[pnlGame] CHANGED: Some stuff regarding AvatarAwards...
+[frmMain] FIXED: Switching from exGA to another tab and back would throw exception
+[frmMain] CHANGED: exGA will now be loaded when loading the Profile
+[Universal] CHANGED: Better Memory-Handling
+-After a 80MB Profile took nearly 600MB of RAM...
+[pnlExGa] CHANGED: Form wont freeze anymore when Downloading / Adding
+-Actually downloading the file is faster then adding ...
+[frmMDI] ADDED: "Last Log" BarText added
+-Since you cant see the log for 90% of the time :-P
+
+-1.5.7.4 Private Beta Release
+
+[pnlExGa] ADDED: GameAdding ftw!
+[frmMDI] CHANGED: While Updating you wont be able to Open a Profile
+-For exGA security
+[GameEdit/CoD4] FIXED: Another check while reading for 0-Byte
+[FileFormats/exGPD] ADDED: "TotalAchievementsPossible" & "TotalAchievementsUnlocked"
+[pnlProfile] CHANGED: Loading includes a lot of Error-Handling
+-Wasnt able to reproduce the Error caused for some people
+[frmMDI] ADDED: Last piece of exGA Code
+[pnlEntries] FIXED: Would throw Exception if the Type wouldnt have any Entries
+-Caused by Obfuscation / Encryption ... dont fkn ask me why, gonna rage someday
+[GamerProfile] FIXED: PEC-File wouldnt be closed
+
+-1.4.52.0 Stable Public Release
+
+[FileFormats/exGPD] CHANGED: The Unlock-States can now be changed
+[frmExGpd_Edit] ADDED
+[frmExGpd_Read] ADDED
+[pnlEntries] CHANGED: "Set Sync" will ALWAYS be enabled
+-Wont work on everything, obviously
+[pnlEntries] CHANGED: When Multi-Select Edit-Panels wont appear
+[eiSetting_Binary] ADDED: Panel to Extract / Inject Binary-Entries
+[pnlAchievements] CHANGED: RichTextBox for Description is larger
+[pnlAchievements] CHANGED: If DateTime is "00:00:00 01.01.1601" it will be set to DateTime.Now
+[frmMDI] FIXED: Some Dev and Beta Stuff would appear to everyone
+-Luckily I didnt implement most of the shit :-P
+
+-1.4.43.0 Stable Public Release
+
+[frmFatX] CHANGED: Loading Images faster now
+[FileFormats/exGPD] FIXED: Will now set the "IsValid" bool
+-Stupid me
+[frmMDI] CHANGED: exProfileEditor.com Button Enabled
+-Leading to Temp-Site
+[frmMDI] ADDED: About Button
+-Was there before, iDunno why it dissapeared
+
+-1.4.39.0 Stable Public Release
+
+[pnlApiSubmit_Games] REMOVED: FUCK I submitted everything twice...
+[Updater] CHANGED: Will now Support-Beta stuff
+[pnlExGpd_Read] CHANGED: Will add the Achievements Image, if present in exGPD
+[FileFormats/exGPD] ADDED: Option to safe GameSettings
+[geHalo3] CHANGED: Some things to make resetting missions possible
+-Because of saving ... ya know
+[Halo3] ADDED: Save-Stuff
+-Cant really test outside of the App, since I dont have the game anymore (duh!)
+[eiSetting_DateTime] ADDED: Panel to See / Edit those DateTime´s
+-Pretty rare, actually
+[eiSetting_Number] ADDED: Panel to See / Edit those number thingys
+[eiSetting_String] ADDED: Panel to See / Edit a String
+[eiString] ADDED: Panel to See / Edit a String
+[pnlEntries] CHANGED: Will load first Item when changing Entry-Type
+[eiImage] ADDED: Panel to See / Extract / Inject a Image
+[pnlEntries] ADDED: Right-Click Item "Set Sync"
+[pnlEntries] ADDED: "SyncEntry" Column for Setting-, Image- and StringEntry´s
+[XDBF] CHANGED: Unlocking-Offline would set the UnlockTime to 0
+-Thats just wrong ...
+[exGPD_Create / Read] REMOVED: Combined and recoded into "FileFormats/exGPD"
+-Makes stuff simpler to maintain
+[exGA_Create / Read] REMOVED: Combined and recoded into "FileFormats/exGA"
+-Makes stuff simpler to maintain
+
+!!! exGA Version increased to 0.0.6.0 !!!
+-Older version are compatible
+
+[exGA_Create / Read] ADDED: "Hidden" variable
+-So stuff will only be visible for Beta / Dev
+[exGA_Create / Read] ADDED: "GsPossible" / "AchPossible" variables
+[pnlGame] CHANGED: Prevent from redrawing when loading a game
+[frmMain] CHANGED: "Unlock All" simplified
+-Works a lot faster now (still might require some time)
+[frmMain] FIXED: exGA-Check now fully working
+[pnlExGpd_Create] ADDED: Search-Stuff
+[pnlExGpd_Read] ADDED: Search-Stuff
+[frmMDI] ADDED: FileSystemWatcher to make sure noone deletes importand stuff
+-Actually currently only used for the Temp-Folder
+[frmFatX] FIXED: Would throw Exception if Temp-File allready exists
+[frmMain] FIXED: "Save to LocalFile" wouldnt work if loaded from FATX
+-Will now Move the Temp-File
+[pnlExGpd_Read] FIXED: In rare cases TitleImage would be null
+-will now skip the image
+[STFS] FIXED: Better FileStream handling
+-Requires some more fixes to work 100%
+-Loads some more Packages now
+[STFS] CHANGED: Better Error-Feedback
+[pnlGame] CHANGED: Only show "Entries" Tab if DashGPD
+[pnlGame] CHANGED: Always close AvatarAwards Tab
+[pnlGame] CHANGED: Close GameEdit Tab on startup
+[frmMain] REMOVED: Second "Save..." Button
+
+-1.3.14.0 Stable Public Release
+
+[frmMDI] CHANGED: Logo
+-Still need a graphic-slave >.<
+[frmMain] ADDED: TextEdit to search for a Game
+-Result will depend on the Game-Type selection
+[frmMain] ADDED: ComboBox to select the Game-Type to show
+[frmMain] CHANGED: Loading / Reloading code changed
+-Necessary for the "Searching" option
+[exGA_Read] ADDED: More Error-Handling
+[pnlExGa] ADDED: Panel to Add Games
+-Will be enabled server-side
+[pnlExGpd_Create] FIXED: Would throw Exception if TitleImage == null
+[frmMain] FIXED: Would throw Exception if TitleImage == null
+[CoD7] FIXED: String parsing now also catches the 0-Byte
+-Shouldnt even happen ... iDunno
+[frmMDI] CHANGED: GameAdder download included into Updater
+[GamerProfile\Account] ADDED/FIXED: Support for Offline-Profiles
+[frmExGa_Create] ADDED
+-Wont be available for public anyway
+[frmMDI] CHANGED: Will check if theres a Internet Connection
+[geHalo3] ADDED: GameEdit-Panel to change Halo 3 Settings
+-With a lot of shit there ...
+-Seriously ... took me a hole day
+[Halo3] ADDED: Class to modify Settings
+-Can not create fresh settings (yet)
+[CoD7] CHANGED: Sync will be set when saving
+[CoD4] CHANGED: Sync will be set when saving
+[Universal] "AppendLog" function changed
+-Will clearly say now where stuff happens
+[ArgumentHandler] ADDED
+-Simple class to parse Arguments
+
+!!! exGPD Version increased to 0.6.5.0 !!!
+-Older versions are NOT compatible
+
+[exGPD_Create] REMOVED: "Unlocked" & "UnlockedOnline"
+-Not required at all (stupid me)
+[GamerProfile] Some slight changes ...
+-Regarding Achievement stuff
+[frmMain] CHANGED: "UpdateGames" Function
+-Works a bit faster now
+-Does Update everything now
+[pnlGame] ADDED: Right-Click Menu for TitleImage
+-Able to inject / extract Image
+[pnlGame] CHANGED: "LastPlayed" Buttons removed
+[pnlGame] CHANGED: TitleName is now editable!
+-Will only apply after pressing "ENTER"
+[pnlProfile] CHANGED: picStar´s Size fixed + Centered
+[pnlExGpd_Read] FIXED: Checking an Item would cause an Exception
+[geCod7] ADDED: Character-Counter
+-Look below, just with a few less Chars (931 + 0 at the end)
+[geCod4] ADDED: Character-Counter
+-Since the Limit per GPD is 1000 Characters (999 + the 0 at the end)
+[tabTwitter] CHANGED: Would always throw exception after 7 Updates
+-Dont know why, added some Error handling
+[geCod4] ADDED: Some Loading-Security
+[geCod7] ADDED: GameEdit-Panel to change CoD-Settings
+-Only thing thats different to CoD4 / 5 is that the hole fun is Encrypted ... sad
+[CoD7] ADDED: Class to modify Game-Settings
+[frmFatX] FIXED: Would close when pressing "Load Devices"
+-WHY SO STUPID!!?!?!??!
+[frmFatX_SelectDevice] CHANGED: "Path" will not be a REAL Path
+-STEWPID MOFO²!!!
+[pnlAchievements] CHANGED: ImageList will be cleared when Game is null
+-Would only appear if DashGPD is loaded
+[pnlAchievements] ADDED: Right-Click Menu for Achievement Image
+-Able to Inject an Image for that Achievement
+[exAA] ADDED: Same as exGA, just for AvatarAwards
+-Only used for "AvatarAdding"
+[pnlGame] CHANGED: LoadGameEdit will dynamicly get the Ach-Tab Index and move behind it
+-For future use ... maybe ... iDunno
+[CoD4] FIXED: Would return nothing if all 3 Entries wouldnt exist
+-Looks like it happens ... sometimes ... for some reason ... blaw
+-Now going to return everything thats there, and create new entries
+[exPEC] ADDED: Same as exGPD / exGA, just for AvatarAwards
+-Same as exGPD, for transfering Avatar-Award State´s including the assets
+[geCod4] ADDED: LineNumbers for all RTB´s
+-So people see where the string starts and ends
+[pnlGame] CHANGED: Some stuff for GameEdit
+-Like that the GameEdit page will be reloaded on every game
+[geCod5] ADDED: Actually same as geCod4 :-P
+-Only time Cod5 will be mentioned, if changes made to Cod4 they also apply on Cod5
+[geCod4] ADDED: GameEdit-Panel to change CoD-Settings
+-Is even able to create the Setting
+[pnlGame] CHANGED: TitleID is now selectable (just useful for me :-3)
+-Switched lable with TextBox
+[STFS] FIXED: Wouldnt propperly save some stuff
+-Profile would appear without ContentImage on 360
+[GamerProfile] FIXED: For some reason the GamerPicture would be in use sometimes
+-Will get the Image from the Container now
+[frmMain] CHANGED: DashboardGPD wont show up in the Game-List anymore
+-There is a button on pnlProfile now
+-Requires a DoubleClick, so noobs wont fuck up stuff
+[pnlEntries] CHANGED: Multi-Extract enabled
+[pnlEntries] FIXED: "Length" would be the Entrie´s Length, not of the Data
+-Will get the Size directly from the Data, not just (EntrySize - 24(or was it 23 ?! iDunno))
+[pnlEntries] FIXED: SettingEntry´s are not only byte[]´s
+-YA STUPID MOFO !!!
+[frmAbout] CHANGED: Some small fixes ...
+[frmMain] FIXED: "Unlock All" wouldnt sync
+-Ooops ...
+[frmMain] CHANGED: "Unlock All" will now put unlocked achievements ontop of the allready unlocked
+[frmMain] CHANGED: Some functions simplefied
+[frmMain] CHANGED: Uploading to FatX faster nao
+[frmFatX] CHANGED: Not "static" anymore, will use the ProfileID now
+[frmFatX_UploadProcess] ADDED: Will show the Uploading-Process to the User
+[frmFeed] CHANGED: SubItems were also Bold
+-Not able to fix
+[pnlExGpd_Read] CHANGED: More exact Feedback-Messages
+[pnlExGpd_Read] ADDED: Little "Info" Box
+-Same as on pnlExGpd_Create
+[pnlExGpd_Read] CHANGED: If "Only Add" is enabled, "Unlock Offline" and "Overwrite Unlocked" will be dissabled
+[pnlExGpd_Read] ADDED: "Unlock Offline"-Checkbox
+-Will Unlock an Achievement offline if its meant to be unlocked / changed
+[Universal] CHANGED: Now using .Net 3.5
+-Big Problems with Obfuscation
+-Took me 2 hours to fix everything
+[Universal] CHANGED: Force to x86
+-Hard problems with x64 Machines
+[frmMain] CHANGED: Some better Error-Handling
+[CoD4] ADDED: Class to modify Game-Settings
+[pnlGame] FIXED: Once "Offline" would be checked if wouldnt uncheck
+-Dwnt forget the "else"´s, faggot!
+[frmMDI] FIXED: Updater wouldnt catch a 404 Error
+[tabTwitter] CHANGED: "ScreenName" SubItem will include CreatedTime
+[tabTwitter] CHANGED: Text will now be the Status
+-Just to show the hole status
+-First SubItem will be ScreenName, second CreatedTime
+[tabTwitter] FIXED: List would flicker like hell
+-Caused by BackgroundImage
+-Using same ListView as the Achievement-List now (required small changes)
+[tabTwitter] CHANGED: List uses BackgroundImage from Account
+[frmFeeds] ADDED: "RSS" Tab
+-Will get latest News from exProfileEditor.com
+-Multi-Threaded
+-Double-Click will Open the link
+-Right-Click Menu
+[frmFeeds] ADDED: "Twitter" Tab
+-Multi-Threaded
+-Reloads every 5 mins
+-Double-Click will Open the link
+-Right-Click Menu
+[frmFeeds] ADDED: Will keep user Up-To-Date about everything
+-RSS from exProfileEditor.com
+-Twitter (IIv3n3II)
+-Chat?
+[frmMain] CHANGED: When loading from FATX the Text thingy will be different
+[pnlExGpd_Read] FIXED: "OnlyAdd" would set the Flags to 9 instead of 0
+[pnlProfile] FIXED: VoiceVolume would be set wrong
+-everything *10
+[exGPD_Create] CHANGED: When selecting multiple Games no Achievements will be loaded
+[exGPD_Create] CHANGED: Optimized Image loading
+[exGPD_Create] CHANGED: "Select / Deselect All" will now require less magic
+-Before the "ItemChecked" Event would always being fired and freeze the GUI
+-It still does, but just for a sec
+[exGPD_Create] ADDED: MultiThreading for loading Games
+[exGPD_Create] ADDED: Little Infobox for selected Games
+[Universal] CHANGED: Filter to all FileDialogs
+-Ok ... nearly all ...
+
+!!! exGPD Version increased to 0.6.3.0 !!!
+-Older versions are NOT compatible
+
+[exGA / GPD_Read & Create] ADDED: Magic to identify both filetypes
+-Seriously, do not mess with this
+[exGPD_Read & Create] CHANGED: Now requires less memory for de- / encrypting
+[exGPD_Read] FIXED: Unhandled exception if GameImg would be null
+-Should not happen at all, but who knows ...
+[exGPD_Read] CHANGED: Simplyfied
+-Works a bit faster now
+[exGA_Create & READ] ADDED: Just a Dev-Tool to Create GameAdder packages
+[regEdit] ADDED: Will be used to store Settings / Stats
+-Class to read/write from Registry
+-Does stuff on-the-fly :-3
+[Universal] CHANGED: Switched from "x86" to "Any CPU"
+-Means the hole fun will run a bit faster on a x64 OS
+-Negative thing is ... I cant edit the code anymore while debugging ... awesome ...
+[pnlAchievements] FIXED: When changing from MultiSelect to SingleSelect focused item will be loaded
+-Before it would just go "bleh" and select one item without fireing the event
+[pnlAchievements] CHANGED: "ListView.SelectedIndexChanged" replaced with "ItemSelectionChanged"
+-List is a bit faster now
+[pnlAchievements] ADDED: "Locked" & "Unlocked" RadioButtons for Description
+[frmFatX] CHANGED: If Profiles are NOT loaded, the GamerPic will now be the ContenImage
+-MIGHT not be the actual GamerPic
+[frmFatX] CHANGED: If Profiles are NOT loaded, the Gamertag will now the the ID
+[Universal] CHANGED: Incredible Performance improvements
+-For all Controls which Load Images from the Profile
+[Universal] CHANGED: All MDI-Childs are now completely skinned
+[pnlExGpd_Create] CHANGED: When "Anonimized" GT wont be attached to the FileName anymore
+[pnlExGpd_Create] CHANGED: Wont freeze anymore
+-Writing to Log for every file made exPE freeze :-/
+[Universal] CHANGED: Now using .Net Framework 4
+[frmMDI] ADDED: Pretty pictar for "Create Profile..."
+[GamerProfile] CHANGED: Few changes for FATX
+-Is a bit faster and easier to maintain now
+
+-0.9.89.2 RC3 Public Release
+
+[Universal] ADDED: Will always run in Admin mode
+-Required for doing FATX stuff
+[Universal] CHANGED: Recoded a lot of stuff todo with FATX
+[pnlProfile] ADDED: Account Stuff
+[Account] ADDED: Check if file is from XDK or not
+[pnlProfile] CHANGED: "Crown"-Thingy
+-No Image = 0 Years
+-Still need to redo the Images ... just 1 image with a label on top of it would be bett0r
+-Takes too much resources this way
+[frmMain] FIXED: Exception handling was broken for some reason ...
+-It worked before ... REALLY
+-Dont look at me like this ...
+-ITS NAWT MY FAULT !!!1
+[frmMDI] CHANGED: Activated Multiselect
+-It was actually meant to be before ... strange ...
+[frmMDI] ADDED: Startup Arguments
+- "-openFile "*ProfilePath*"" will open a profile from desired path
+- some moar ... FOR MÜ MWHAHAHAHAHHAHAAHAH
+[frmAbout] ADDED: Credits to CLK
+-The Guy, not the car
+[pnlFatX] ADDED: Check if File got Extracted
+[pnlProfile] CHANGED: MaxSize for Motto, Location, Name & Bio
+[pnlLog] FIXED: FilePath would contain Illegal Characters
+[Universal] CHANGED: Nearly all Form-Icons
+-They will all get theirs now from the MDI-Form
+[pnlProfile] FIXED: Game-Pics would start at "1", not "0" ...
+-Me just going "KEKEKEKKEKEKEKE BLAAAAAAAAAAAAWWWWWWWWWWW" again
+[frmMain] FIXED/CHANGED: "RemoteChangeGame" function now starts at the 3rd Index
+-When clicking a game on pnlProfile if would throw an Exception because of the Profile in the Game-List
+[pnlProfile] ADDED: "Reset"-Button
+-Since I never re-load the Panel the Settings always stay the same
+-When pressing "Reset" it will load the stuff from before
+[pnlProfile] CHANGED: Avatar-Colors now Enabled
+[GamerProfile_Settings] FIXED: Now propperly loads / saves the Avatar-Colors
+[pnlEntries] CHANGED: Recoded Saving function
+[Universal] FIXED: Grammar Stuff
+-COMPLEX ... YA SUCKK0RZ
+
+-0.9.53.2 RC2 Panic-Release
+
+[pnlProfile] FIXED: "Crown"
+-Saved "10", which actually was a Debugging-Feature (to test & stuff)
+-Still need to test sync
+
+-0.9.52.2 RC2 Public Release
+
+[GamerProfile] FIXED: "Crown"
+-DID A TERRIBLE MISTAKE
+-BLAW
+
+-0.9.51.2 RC2 First Public Release
+
+!!! Removed some things !!!
+-This is for the public release, since some features are not done and / or not meant to be public.
+
+[frmMDI] CHANGED: The way the Builds are handled
+[pnlProfile] ADDED: Look 1 thingy below
+[GamerProfile_Settings] ADDED: "Avatar_SkinColor" & "Avatar_HairColor" & "Avatar_LipColor" AndSoOnFFS
+[pnlProfile] ADDED: "Crown"
+-Just click on the Year-Thingy to edit
+-Still need a propper Image for it
+[GamerProfile] ADDED: "Crown"
+-Indicates how long youre on Xbox LIVE (in Years)
+-Requires some more testing, but its rather simple
+[pnlEntries] ADDED: Temprorary Right-Click Menu (need üt for resöärsch)
+-"Extract" Will extract the SELECTED Entry
+
+!!! WARNING !!!
+I just did a test and loaded a Profile (fresh created) with more then 1300 Games added...
+Never do it ... seriously ... it took like 3mins on a QuadCore iMac ...
+!!! /WARNING !!!
+
+[pnlExGpd_Create] CHANGED: Will not show "Games" with 0G Possible
+-Theres a reason why its only on Create ... kekeke
+[pnlLog] CHANGED: Theres now a " " between TimeDate and Message
+-Looks betta nao
+[pnlGame] CHANGED: Now handles the DashGPD a bit better
+[frmMain] CHANGED: Will now report bunch of Images, instead of every single one
+[Universal] CHANGED: MountPth will be now ALWAYS in Application.StartupPath + "\\Temp"
+-Will clear the folder on every start
+-Will be more useful for FATX-Shit
+[frmMain] CHANGED: Threading doesnt make sense with too much invokes ...
+-Will now Report a bunch of games, and not every single one
+-Loading is way faster now (GO ME !!!)
+-TESTED: Game with way above 300 Games now takes a few secs to load ... or its just the faster iMac :-P
+[frmMain] FIXED: Exception handling would throw an exception ... haha -_-
+[pnlEntries] ADDED: Ability to Extract all kinds of Entries
+[pnlEntries] ADDED: Different Panels for all kinds of Entries
+
+!!! exGPD Version increased to 0.6.2
+
+[exGPD_Read & Create] ADDED: Some more values ...
+[exGPD_Read & Create] CHANGED: AES to Rijnablaw
+-Its actually the same ... but meh
+-Changed it for ... future stuff :-3
+
+-0.9.20.2 RC1 Private Release
+
+[Updater] CHANGED: Will now Open new exPE Build and close the Updater
+-Version increased to 0.5.4.0
+
+!!! exGPD Version increased to 0.6 !!!
+-Older exGPD Version WONT work
+
+[exGPD_Read & Create] FIXED: Special Characters would appear wrong
+-base64 ftw!
+[Universal] REMOVED: A lot Developer-Features
+-Will still be present, just not for public
+-Later on I will add an "Advanced" Option for people to access those features
+[pnlExGpd_Read] ADDED: Check if current GPD (in the profile) is older / newer
+[pnlExGpd_Read] FIXED: Would throw an Exception if AchId not found
+-Only appeared if GPD of the creator would be newer
+-Will now update the GPD
+--Will also overwrite allready existing Image / TitleName (if not up-to-date)
+
+-0.9.16.2 RC1 Private Release
+--This is a Release Candidate, so I prepare for a release soon
+
+OK ... at this point I forgot to note some things I changed, since I worked for about 10 hours at exGPD ...
+Had to change a lot of things for exGPD and fix the same again >.<
+
+[pnlExGpd_Create] ADDED: "Select all" / "Deselect all" Buttons
+[pnlExGpd_Read] ADDED
+-Will read your exGPD
+-Some Options: "Only Add Games", "Overwrite allready unlocked"
+[pnlExGpd_Create] FIXED: CheckBox´es for listAchievement ... wat ?
+[frmMain] CHANGED: Combined both "Loading" Threads
+-I dont know why I seperated them in the first place ... who cares :-P
+[exGPD_Create & Read] CHANGED: Performance improvement
+-Less memory usage, MOAR SPEED
+[pnlExGpd_Create] CHANGED: Performance improvement
+-Does now use the ImageList for Games from frmMain
+[pnlExGpd_Create] ADDED
+-Ability to Export your Games + its Achievement-Order
+-You can Anonymise your exGPD (if only be used for GameAdding)
+--That will order the Achievements like they normaly do, lock them and set everything back to "normal"
+[exGPD_Create & Read] CREATED
+-Wüt encrüptiön :-3
+[pnlAchievements] ADDED: "CTRL + A" on Achievement-List will select all
+[frmMain] CHANGED: Performance improvements
+-pnlGame wont be re-loaded if the Panel before loaded is pnlGame
+-This will decrease flickering
+-Also thought about removing the "Enabled = false" thingy, but on slower machines this would go terrible wrong
+[frmMain] CHANGED: DashboardGPD can now be loaded
+-Now, on Beta, it will always be loaded into the List
+-Later, there will be a "Advanced"-Option for it
+[pnlGame] CHANGED: When loading Everything the Achievements-Tab will be auto-selected
+[frmMain] CHANGED: Simplified Game-Selection function shizzle ma nizzle
+-Way easier to expand / maintain now
+[frmMain] ADDED: Warning for "Unlock All (Offline)"
+[frmMain] FIXED: this.Activate() is NOT this.Focus() ...
+[frmMain] FIXED: Backgroundworker is better then ANYTÜNG ÖLS
+-http://www.developerdotstar.com/community/node/671
+[pnlEntries] ADDED
+-Actually only interesting for people who reverse-engineer
+-You can extract / modify / add all kind of Entry-Type´s
+-Deleting will be added after recoding the XDBF-Save function (will take shitload of time)
+-ONLY for advanced Users
+-Helps me Debugging Profiles :-3
+-ONE MOAR LINE
+[Universal] CHANGED: All listView´s and treeView´s have now BorderStyle = None
+[pnlAchievements] CHANGED: If there is no Achievement it would go "BLAAAAAAAAAW" and party hard
+[frmMain] CHANGED: Changed AGAIN the hole way the listView behaves
+
+-0.7.11.2 Private release
+
+[frmMDI] CHANGED: Slight modifications to the Updater
+[frmMain] CHANGED: Disabled customization of bar
+[frmMain] CHANGED: Changed the hole way the listView behaves
+-You cant select "nothing" anymore
+-RightClick-Menu only appears if you clicked an item
+-RightClick-Menu will not appear on Profile
+[Universal] CHANGED: All Forms are now pre-loaded
+-First Load will take more time but overall a massive performance improvement
+-Most recognisable when switching from Game to game
+[frmMain] CHANGED: Form will now get Focus while Saving
+-Would focus pnlLog
+[frmMain] ADDED: RightClick-Menu for Game-List
+-Only working button right now is "Unlock All (Offline)"
+-"Delete Game" requires more testing
+[pnlProfile] CHANGED: Removed "Save"-Button
+-Required to always Pre-Load the panel on frmMain
+-Maybe I should also Pre-Load the Game-panel ... hmm ...
+[pnlGame] ADDED: Some moar logging
+[pnlGame] ADDED: LastTimePlayed
+-ReadOnly, since it doesnt sync anyway
+[X360DLL] CHANGED: More Error-Handling
+[GamerProfile] ADDED: Function "Create"
+-Will be able to create a fresh (Offline) Profile
+-Requires more testing
+[Account] ADDED: Function "LoadDefault"
+[GamerProfile] ADDED: "TotalGamerscoreUnlocked_Offline" & "TotalGamerscoreUnlocked_Online"
+[GamerProfile] ADDED: "TotalAchievementsUnlocked_Offline" & "TotalAchievementsUnlocked_Online"
+[XDBF_TitleEntry] ADDED: "GamerscoreUnlocked_Offline" & "GamerscoreUnlocked_Online"
+[XDBF_TitleEntry] ADDED: "AchievementUnlocked_Offline" & "AchievementUnlocked_Online"
+[pnlProfile] ADDED: Layout shizzle
+-Couldnt be arsed the hole time ... took too much time >.<
+[frmMDI] ADDED: "v3n3 @ Twitter"-Button
+[Universal] ADDED: Some more Error-Handling + Feedback
+[frmAbout] ADDED: Testing Salves
+[pnlLog] ADDED: Right-Click Menu (Save / Clear Log)
+-Should add Auto-Save... but might require too much ressources
+[frmMain] FIXED: Logging while Closing might appear twice
+[GamerProfile] FIXED: Would throw an Exception if a TitlePlayed-Entry would be null
+-Really weird, looks like some other tool fucked that up :-/
+-Need to fix that when saving
+
+-0.5.35.2 Private release
+
+[frmMDI] CHANGED: Deleted all my Updater Code and wrote everything from scratch
+[frmMain] CHANGED: Form cant be resized anymore
+[frmMain] CHANGED: Form cant be maximized anymore
+[frmMain] CHANGED: Title now contains FilePath
+[GamerProfile] FIXED: GPD´s which included "Xbox 360" would be a "AddedTitle"
+-Just gonna check now if the GPD really exists as File
+[pnlAchievements] CHANGED: Seperated Date and Time (with all necessary changes)
+[pnlGame] ADDED: "LastTimePlayed" shizzle
+[pnlGame] ADDED: ProgressBar´s for GS and Ach
+[pnlAchievements] ADDED: First entry will be automaticly selected after loading
+[frmMain] ADDED: First Entry will be automaticly selected after loading
+[frmMDI] FIXED: If File woudlnt be a 360 Container a form would still appear
+-Still need to improve this a bit
+[frmMDI] ADDED: DragNDrop File-Loading (including all necessery changes)
+[Program] ADDED: You can now only start 1 instance of exPE
+
+-0.4.12.2 Private release
+
+[frmMain] CHANGED: Form will not get focus when loading package
+-Before it would focus the Log
+[frmMain] FIXED: Closing a form would cause a Exception (because of obfuscation)
+-Added check if Container is allready closed
+[frmMain] CHANGED: Icon is now Gamerpicture
+[frmMain] CHANGED: FormTitle is now Gamertag
+[frmMDI] CHANGED: FormTitle changed
+[frmMDI] CHANGED: Updater changed a bit (since this code was old and fugly)
+-Still requires major rewrite with its own form / executable
+[STFS] CHANGED: Mount-Folder is now hidden
+[Universal] ADDED: Some more Error-Handling (requires still more)
+[pnlLog] FIXED: Would throw an Exception after open / close multiple times
+-Looks like another thing the Obfuscation fucked up ...
+[Universal] ADDED: Added Logging everywhere
+[frmMain] ADDED: Loading is now Multi-Threaded
+-Loading process is split up into 2 Processes, one for Loading the Package and adding
+the Games to the TopEnd and the other one to load the images (which takes a lot of ressources)
+-Will hopefully keep the app from freezing and speed up things
+-After some testing it appears that small profiles take more time to load but bigger profiles
+are faster
+-Big Profiles will still LockUp a bit ... needs more investigation
+[pnlLog] CHANGED: Moved "\n" from end to beginning
+[Universal] CHANGED: Form will lock while Loading / Saving
+[frmMDI] ADDED: Check if file is allready in use
+[frmMain] ADDED: Package will not be closed when closing form
+[pnlAchievements] ADDED: MultiSelect for unlocking Achievements (+ all necessery changes)
+-This will replace the "Set All" Function. Just select a few Achievements and it will apply the selected shizzles
+[pnlAchievements] REMOVED: "Set All" Button
+[frmMain] FIXED: Clicking a Game would cause an Exception
+-Dont know why ... Without Obfuscation it worked :-/
+
+-0.3.12.2 First Private Release
